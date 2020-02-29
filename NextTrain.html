@@ -6,6 +6,7 @@
         <title>Next Train</title>
         <style>
             #next_train_destination, #next_train_time {color: blue; font-weight: bold;}
+            #stations
             body {margin:20px;}
         </style>
     </head>
@@ -27,10 +28,31 @@
 
                     $("#next_train_destination").text(response.Trains[0].Destination);
                     $("#next_train_time").text(response.Trains[0].Min);
-            });
-        }
+                });
+            }
+
+            function getStationList() {
+                var stationListQuery = {
+                    "async": true,
+                    "crossDomain": true,
+                    "dataType": "json",
+                    "url":"https://api.wmata.com/Rail.svc/json/jStations?RD?&api_key=e13626d03d8e4c03ac07f95541b3091b",
+                    "method": "GET"
+                }
+
+                $.ajax(stationListQuery)
+
+                .done(function (response) {
+                    console.log(response);
+                    for (index in response.Stations) {
+                        station = response.Stations[index].Name;
+                        console.log(station);
+                    }
+                });
+            }
         </script>
         <button type="button" onclick="getNextTrain()" class="btn btn-dark nextTrainButton">Get Next Train</button>
+        <button type="button" onclick="getStationList()" class="btn btn-dark stationListButton">Get Station List</button>
         <h2>Next Train at Metro Center</h2>
         <span><b>Destination: </b></span><span id="next_train_destination"></span><br/>
         <span><b>Arrives In (min): </b></span><span id="next_train_time"></span><br/>
