@@ -44,15 +44,18 @@
 
                 .done(function (response) {
                     console.log(response);
+                    let stationsList = [];
+                    let stationCodes = [];
                     for (index in response.Stations) {
-                        station = response.Stations[index].Name;
-                        console.log(station);
+                        stationsList[index] = response.Stations[index].Name;
+                        stationCodes[index] = response.Stations[index].Code;
+                        console.log("Station: " + stationsList[index][0] + " (" + stationsList[index][1] + ")" );
                     }
                 });
             }
         </script>
-        <button type="button" onclick="getNextTrain()" class="btn btn-dark nextTrainButton">Get Next Train</button>
-        <button type="button" onclick="getStationList()" class="btn btn-dark stationListButton">Get Station List</button>
+        <button type="button" onclick="getNextTrain()" class="btn btn-dark nextTrainButton">Get Next Train</button><br/>
+        <button type="button" onclick="getStationList()" class="btn btn-dark stationListButton">Get Station List</button><br/>
         <h2>Next Train at Metro Center</h2>
         <span><b>Destination: </b></span><span id="next_train_destination"></span><br/>
         <span><b>Arrives In (min): </b></span><span id="next_train_time"></span><br/>
