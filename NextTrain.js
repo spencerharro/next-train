@@ -35,7 +35,7 @@ function getStationList() {
         for (index in response.Stations) {
             stationsList[index] = response.Stations[index].Name;
             stationCodes[index] = response.Stations[index].Code;
-            console.log("Station: " + stationsList[index][0] + " (" + stationsList[index][1] + ")" );
+            console.log("Station: " + stationsList[index] + " (" + stationsList[index] + ")" );
         }
     });
 }
