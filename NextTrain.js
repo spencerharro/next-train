@@ -1,4 +1,7 @@
 function getNextTrain() {
+    let next_train_destination = $('#next_train_destination');
+    let next_train_time = $('#next_train_time');
+
     var query = {
         "async": true,
         "crossDomain": true,
@@ -12,8 +15,8 @@ function getNextTrain() {
     .done(function (response) {
         console.log(response);
 
-        $("#next_train_destination").text(response.Trains[0].Destination);
-        $("#next_train_time").text(response.Trains[0].Min);
+        next_train_destination.text(response.Trains[0].Destination);
+        next_train_time.text(response.Trains[0].Min);
     });
 }
 
