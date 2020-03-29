@@ -10,11 +10,11 @@
             body {margin:20px;}
         </style>
     </head>
-    <body>
+    <body onload="getStationList();">
         <script src="NextTrain.js"></script>
+        <select id="station_dropdown" name="stations"></select><br/>
         <button type="button" onclick="getNextTrain()" class="btn btn-dark nextTrainButton">Get Next Train</button><br/>
-        <button type="button" onclick="getStationList()" class="btn btn-dark stationListButton">Get Station List</button><br/>
-        <h2>Next Train at Metro Center</h2>
+        <h2>Next Train:</h2>
         <span><b>Destination: </b></span><span id="next_train_destination"></span><br/>
         <span><b>Arrives In (min): </b></span><span id="next_train_time"></span><br/>
     </body>

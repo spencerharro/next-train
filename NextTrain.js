@@ -1,12 +1,17 @@
+//$(document).ready(getStationList() {
+//    console.log("ready");
+//})
+
 function getNextTrain() {
     let next_train_destination = $('#next_train_destination');
     let next_train_time = $('#next_train_time');
-
+    let stationCode = document.getElementById("station_dropdown").value;
+    console.log("stationCode " + stationCode);
     var query = {
         "async": true,
         "crossDomain": true,
         "dataType": "json",
-        "url": "https://api.wmata.com/StationPrediction.svc/json/GetPrediction/A01?=\"A01\"&api_key=e13626d03d8e4c03ac07f95541b3091b",
+        "url": "https://api.wmata.com/StationPrediction.svc/json/GetPrediction/" + stationCode + "?api_key=e13626d03d8e4c03ac07f95541b3091b",
         "method": "GET"
     }
 
@@ -21,6 +26,11 @@ function getNextTrain() {
 }
 
 function getStationList() {
+    let stations_dropdown = $('#station_dropdown');
+    stations_dropdown.empty();
+    stations_dropdown.append('<option selected="true" disabled>Choose Station</option>');
+    stations_dropdown.prop('selectedIndex',0);
+
     var stationListQuery = {
         "async": true,
         "crossDomain": true,
@@ -33,12 +43,8 @@ function getStationList() {
 
     .done(function (response) {
         console.log(response);
-        let stationsList = [];
-        let stationCodes = [];
         for (index in response.Stations) {
-            stationsList[index] = response.Stations[index].Name;
-            stationCodes[index] = response.Stations[index].Code;
-            console.log("Station: " + stationsList[index] + " (" + stationsList[index] + ")" );
+            stations_dropdown.append($('<option></option>').attr('value', response.Stations[index].Code).text(response.Stations[index].Name));
         }
     });
 }
