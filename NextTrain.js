@@ -3,8 +3,7 @@
 //})
 
 function getNextTrain() {
-    let next_train_destination = $('#next_train_destination');
-    let next_train_time = $('#next_train_time');
+    let last_train = $('#trainTable tr:last');
     let stationCode = document.getElementById("station_dropdown").value;
     var query = {
         "async": true,
@@ -17,8 +16,11 @@ function getNextTrain() {
     $.ajax(query)
 
     .done(function (response) {
-        next_train_destination.text(response.Trains[0].Destination);
-        next_train_time.text(response.Trains[0].Min);
+        for (train in response.Trains)
+	{
+		//Add train info to page
+		last_train.after('<tr><td>',response.Trains[train].Destination,'</td><td>',response.Trains[train].Min,'</td></tr>');
+	}
     });
 }
 
