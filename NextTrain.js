@@ -1,3 +1,8 @@
+// Populate lines dropdown with available lines when page loads
+$( document ).ready(function() {
+    getLineList();
+});
+
 function getNextTrain() {
     let last_train = $('#trainTable tr:last');
     let stationCode = document.getElementById("station_dropdown").value;
@@ -41,4 +46,27 @@ function getStationList() {
             stations_dropdown.append($('<option></option>').attr('value', response.Stations[index].Code).text(response.Stations[index].Name));
         }
     });
+}
+
+function getLineList() {
+  let lines_dropdown = $('#line_dropdown');
+  lines_dropdown.empty();
+  lines_dropdown.append('<option selected="true" disabled>Choose Line</option>');
+  lines_dropdown.prop('selectedIndex',0);
+  var lineListQuery = {
+    "async": true,
+    "crossDomain": true,
+    "dataType":"json",
+    "url":"https://api.wmata.com/Rail.svc/json/jLines?api_key=5b45d3ada42b4e9eba0f40533ca20a6d",
+    "method":"GET"
+  }
+  $.ajax(lineListQuery)
+
+  .done(function (response) {
+    for (index in response.Lines) {
+      //add line to line dropdown
+      lines_dropdown.append($('<option></option>').attr('value', response.Lines[index].LineCode).text(response.Lines[index].DisplayName));
+      console.log("Line - " + response.Lines[index].DisplayName);
+    }
+  })
 }

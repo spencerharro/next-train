@@ -16,6 +16,7 @@
     <body onload="getStationList();">
         <script src="NextTrain.js"></script>
         <h2>Next Train</h2>
+        <select id="line_dropdown" name="lines"></select><br/>
         <select onChange="getNextTrain()" id="station_dropdown" name="stations"></select><br/>
         <table id=trainTable>
           <tr>
