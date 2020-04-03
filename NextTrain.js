@@ -3,7 +3,8 @@ $( document ).ready(function() {
     getLineList();
 });
 
-function getNextTrain() {
+/** Populates table with next trains arriving at the specified station. */
+function getNextTrainList() {
     let last_train = $('#trainTable tr:last');
     let stationCode = document.getElementById("station_dropdown").value;
     var query = {
@@ -17,14 +18,14 @@ function getNextTrain() {
     $.ajax(query)
 
     .done(function (response) {
-        for (train in response.Trains)
-	{
-		//Add train info to page
-		last_train.after('<tr><td>',response.Trains[train].Destination,'</td><td>',response.Trains[train].Min,'</td></tr>');
-	}
+      for (train in response.Trains) {
+    		// Add list of next trains and ETA's to page (based on selected line/station)
+    		last_train.after('<tr><td>',response.Trains[train].Destination,'</td><td>',response.Trains[train].Min,'</td></tr>');
+    	}
     });
 }
 
+/** Gets list of stations on the specified line and uses to populate station dropdown */
 function getStationList() {
     let stations_dropdown = $('#station_dropdown');
     let lineCode = document.getElementById("line_dropdown").value;
@@ -44,11 +45,13 @@ function getStationList() {
 
     .done(function (response) {
         for (index in response.Stations) {
+          // add stations on the selected line to the stations dropdown
           stations_dropdown.append($('<option></option>').attr('value', response.Stations[index].Code).text(response.Stations[index].Name));
         }
     });
 }
 
+/** Gets available WMTA lines and uses to populate lines dropdown */
 function getLineList() {
   let lines_dropdown = $('#line_dropdown');
   lines_dropdown.empty();
@@ -67,7 +70,6 @@ function getLineList() {
     for (index in response.Lines) {
       //add line to line dropdown
       lines_dropdown.append($('<option></option>').attr('value', response.Lines[index].LineCode).text(response.Lines[index].DisplayName));
-      console.log("Line - " + response.Lines[index].DisplayName + " Code: " + response.Lines[index].LineCode);
     }
   })
 }
