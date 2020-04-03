@@ -10,7 +10,7 @@ function getNextTrain() {
         "async": true,
         "crossDomain": true,
         "dataType": "json",
-        "url": "https://api.wmata.com/StationPrediction.svc/json/GetPrediction/?" + stationCode + "?api_key=5b45d3ada42b4e9eba0f40533ca20a6d",
+        "url": "https://api.wmata.com/StationPrediction.svc/json/GetPrediction/" + stationCode + "?api_key=5b45d3ada42b4e9eba0f40533ca20a6d",
         "method": "GET"
     }
 
