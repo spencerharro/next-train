@@ -1,7 +1,3 @@
-//$(document).ready(getStationList() {
-//    console.log("ready");
-//})
-
 function getNextTrain() {
     let last_train = $('#trainTable tr:last');
     let stationCode = document.getElementById("station_dropdown").value;
