@@ -1,4 +1,4 @@
-// Populate lines dropdown with available lines when page loads
+/** Populate lines dropdown with available lines when page loads */
 $( document ).ready(function() {
     getLineList();
     createNextTrainTable();
@@ -45,10 +45,11 @@ function getStationList() {
     $.ajax(stationListQuery)
 
     .done(function (response) {
-        for (index in response.Stations) {
-          // add stations on the selected line to the stations dropdown
-          stations_dropdown.append($('<option></option>').attr('value', response.Stations[index].Code).text(response.Stations[index].Name));
-        }
+      //sort stations by Code.  First by high A's then by low B's.
+      for (index in response.Stations) {
+        // add stations on the selected line to the stations dropdown
+        stations_dropdown.append($('<option></option>').attr('value', response.Stations[index].Code).text(response.Stations[index].Name));
+      }
     });
 }
 
@@ -87,17 +88,18 @@ function createNextTrainTable() {
 
 /** Erases all of the next trains so that table can repopulate with new destinations/times */
 function eraseNextTrainTable() {
-  // Erase next train table (except for header (row 0))
+  // Erase next train table (except for header (row 1))
   nextTrainTbl = document.getElementById('trainTable');
-  while(testTable.rows.length > 0) {
-    testTable.deleteRow(0);
+  while(nextTrainTbl.rows.length > 1) {
+    nextTrainTbl.deleteRow(1);
   }
 }
+
 /** Adds train destination and time details to next train table */
 function insertNextTrainTable(dest, time) {
   // Insert next train destination (dest) and departs in (time) into next train table
   nextTrainTbl = document.getElementById('trainTable');
-  row = testTable.insertRow();
+  row = nextTrainTbl.insertRow();
   row.insertCell(0).innerHTML = dest;
   row.insertCell(1).innerHTML = time;
 }
