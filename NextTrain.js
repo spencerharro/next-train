@@ -6,7 +6,6 @@ $( document ).ready(function() {
 
 /** Populates table with next trains arriving at the specified station. */
 function getNextTrainList() {
-    let last_train = $('#trainTable tr:last');
     let stationCode = document.getElementById("station_dropdown").value;
     eraseNextTrainTable();
     var query = {
@@ -22,7 +21,7 @@ function getNextTrainList() {
     .done(function (response) {
       for (train in response.Trains) {
     		// Add list of next trains and ETA's to page (based on selected line/station)
-        insertNextTrainTable(response.Trains[train].Destination,response.Trains[train].Min)
+        insertNextTrainTable(response.Trains[train].DestinationName,response.Trains[train].Min)
   		}
     });
 }
@@ -86,14 +85,15 @@ function createNextTrainTable() {
   headerRow.insertCell(1).innerHTML = "<b>Departs In (Min)</b>";
 }
 
+/** Erases all of the next trains so that table can repopulate with new destinations/times */
 function eraseNextTrainTable() {
   // Erase next train table (except for header (row 0))
   nextTrainTbl = document.getElementById('trainTable');
-  while(testTable.rows.length > 1) {
-    testTable.deleteRow(1);
+  while(testTable.rows.length > 0) {
+    testTable.deleteRow(0);
   }
 }
-
+/** Adds train destination and time details to next train table */
 function insertNextTrainTable(dest, time) {
   // Insert next train destination (dest) and departs in (time) into next train table
   nextTrainTbl = document.getElementById('trainTable');
