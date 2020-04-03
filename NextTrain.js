@@ -10,7 +10,7 @@ function getNextTrain() {
         "async": true,
         "crossDomain": true,
         "dataType": "json",
-        "url": "https://api.wmata.com/StationPrediction.svc/json/GetPrediction/" + stationCode + "?api_key=5b45d3ada42b4e9eba0f40533ca20a6d",
+        "url": "https://api.wmata.com/StationPrediction.svc/json/GetPrediction/?" + stationCode + "?api_key=5b45d3ada42b4e9eba0f40533ca20a6d",
         "method": "GET"
     }
 
@@ -27,6 +27,7 @@ function getNextTrain() {
 
 function getStationList() {
     let stations_dropdown = $('#station_dropdown');
+    let lineCode = document.getElementById("line_dropdown").value;
     stations_dropdown.empty();
     stations_dropdown.append('<option selected="true" disabled>Choose Station</option>');
     stations_dropdown.prop('selectedIndex',0);
@@ -35,7 +36,7 @@ function getStationList() {
         "async": true,
         "crossDomain": true,
         "dataType": "json",
-        "url":"https://api.wmata.com/Rail.svc/json/jStations?RD?&api_key=5b45d3ada42b4e9eba0f40533ca20a6d",
+        "url":"https://api.wmata.com/Rail.svc/json/jStations?LineCode=" + lineCode + "&api_key=5b45d3ada42b4e9eba0f40533ca20a6d",
         "method": "GET"
     }
 
@@ -43,7 +44,7 @@ function getStationList() {
 
     .done(function (response) {
         for (index in response.Stations) {
-            stations_dropdown.append($('<option></option>').attr('value', response.Stations[index].Code).text(response.Stations[index].Name));
+          stations_dropdown.append($('<option></option>').attr('value', response.Stations[index].Code).text(response.Stations[index].Name));
         }
     });
 }
@@ -66,7 +67,7 @@ function getLineList() {
     for (index in response.Lines) {
       //add line to line dropdown
       lines_dropdown.append($('<option></option>').attr('value', response.Lines[index].LineCode).text(response.Lines[index].DisplayName));
-      console.log("Line - " + response.Lines[index].DisplayName);
+      console.log("Line - " + response.Lines[index].DisplayName + " Code: " + response.Lines[index].LineCode);
     }
   })
 }
