@@ -5,7 +5,7 @@ function getNextTrain() {
         "async": true,
         "crossDomain": true,
         "dataType": "json",
-        "url": "https://api.wmata.com/StationPrediction.svc/json/GetPrediction/" + stationCode + "?api_key=e13626d03d8e4c03ac07f95541b3091b",
+        "url": "https://api.wmata.com/StationPrediction.svc/json/GetPrediction/" + stationCode + "?api_key=5b45d3ada42b4e9eba0f40533ca20a6d",
         "method": "GET"
     }
 
@@ -30,7 +30,7 @@ function getStationList() {
         "async": true,
         "crossDomain": true,
         "dataType": "json",
-        "url":"https://api.wmata.com/Rail.svc/json/jStations?RD?&api_key=e13626d03d8e4c03ac07f95541b3091b",
+        "url":"https://api.wmata.com/Rail.svc/json/jStations?RD?&api_key=5b45d3ada42b4e9eba0f40533ca20a6d",
         "method": "GET"
     }
 
