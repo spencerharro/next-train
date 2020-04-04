@@ -6,12 +6,14 @@ $( document ).ready(function() {
     // Make next train options clickable
     $( '#trainTable' ).on( "click", "tr", function(event) {
         console.log("Selected train: "
-        + $(this).find("td:eq(0)").text()   // Line color
-        + " line - Destination: "
-        + $(this).find("td:eq(1)").text()   // Destination
-        + " - Departs in (min): "
-        + $(this).find("td:eq(2)").text()   // Departure time
+            + $(this).find("td:eq(0)").text()   // Line color
+            + " line - Destination: "
+            + $(this).find("td:eq(1)").text()   // Destination
+            + " - Departs in (min): "
+            + $(this).find("td:eq(2)").text()   // Departure time
         );
+
+        getTimeBetweenStations("A01","A03");
     });
 });
 
@@ -89,7 +91,30 @@ function getLineList() {
       //add line to line dropdown
       lines_dropdown.append($('<option></option>').attr('value', response.Lines[index].LineCode).text(response.Lines[index].DisplayName));
     }
-  })
+});
+}
+/** Returns the estimated time to transit between two stations
+*
+* @param {string} station1 3-letter station code for station 1
+* @param {string} station2 3-letter station code for station 2
+* @return {int}
+*/
+function getTimeBetweenStations(station1,station2) {
+    // Get estimated time between stations 1 and 2
+    var timeQuery = {
+        "async": true,
+        "crossDomain": true,
+        "datatype": "json",
+        "url": "https://api.wmata.com/Rail.svc/json/jSrcStationToDstStationInfo?FromStationCode=" + station1 + "&ToStationCode=" + station2 + "&api_key=e13626d03d8e4c03ac07f95541b3091b",
+        "method": "GET"
+    }
+    $.ajax(timeQuery)
+    .done(function (response) {
+        //Get estimated time from query response
+        var time = response.StationToStationInfos[0].RailTime
+        console.log("Estimated time between " + station1 + " and " + station2 + " is " + time + "min.");
+        return time;
+    });
 }
 
 /** Initializes the next train table */
