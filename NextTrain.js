@@ -98,7 +98,11 @@ function eraseNextTrainTable() {
   }
 }
 
-/** Adds train destination and time details to next train table */
+/** Adds train destination and time details to next train table
+*
+* @param {string} dest The desination of the trains
+* @param {string} time The time until train arrives at station
+*/
 function insertNextTrainTable(dest, time) {
   // Insert next train destination (dest) and departs in (time) into next train table
   nextTrainTbl = document.getElementById('trainTable');
