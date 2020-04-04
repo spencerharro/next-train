@@ -24,7 +24,9 @@ function getNextTrainList() {
     .done(function (response) {
       for (train in response.Trains) {
     		// Add list of next trains and ETA's to page (based on selected line/station)
-        insertNextTrainTable(response.Trains[train].DestinationName,response.Trains[train].Min)
+        insertNextTrainTable(response.Trains[train].Line,
+          response.Trains[train].DestinationName,
+          response.Trains[train].Min)
   		}
     });
 }
@@ -85,8 +87,10 @@ function createNextTrainTable() {
   nextTrainTbl = document.getElementById('trainTable');
   header = nextTrainTbl.createTHead();
   headerRow = nextTrainTbl.insertRow(0);
-  headerRow.insertCell(0).innerHTML = "<b>Destination</b>";
-  headerRow.insertCell(1).innerHTML = "<b>Departs In (Min)</b>";
+  headerRow.insertCell(0).innerHTML = "<b>Line</b>";
+  headerRow.insertCell(1).innerHTML = "<b>Destination</b>";
+  headerRow.insertCell(2).innerHTML = "<b>Departs In (Min)</b>";
+  headerRow.style.backgroundColor = "#D3D3D3";   // light grey
 }
 
 /** Erases all of the next trains so that table can repopulate with new destinations/times */
@@ -100,13 +104,35 @@ function eraseNextTrainTable() {
 
 /** Adds train destination and time details to next train table
 *
+* @param {string} line The 2-letter line color code
 * @param {string} dest The desination of the trains
 * @param {string} time The time until train arrives at station
 */
-function insertNextTrainTable(dest, time) {
+function insertNextTrainTable(line, dest, time) {
   // Insert next train destination (dest) and departs in (time) into next train table
   nextTrainTbl = document.getElementById('trainTable');
   row = nextTrainTbl.insertRow();
-  row.insertCell(0).innerHTML = dest;
-  row.insertCell(1).innerHTML = time;
+  row.style.backgroundColor = "#F8F8F8";  // slight off-white
+
+  line_cell = row.insertCell(0);
+  line_cell.innerHTML = line;
+
+  dest_cell = row.insertCell(1);
+  dest_cell.innerHTML = dest;
+
+  time_cell = row.insertCell(2);
+  time_cell.innerHTML = time;
+
+  // train boarding
+  if(time == "BRD") {
+    row.style.color = "red";
+  }
+  // train arriving
+  else if(time == "ARR") {
+    row.style.color = "orange";
+  }
+  // train still enroute
+  else {
+    row.style.color = "black";
+  }
 }
