@@ -2,6 +2,17 @@
 $( document ).ready(function() {
     getLineList();
     createNextTrainTable();
+
+    // Make next train options clickable
+    $( '#trainTable' ).on( "click", "tr", function(event) {
+        console.log("Selected train: "
+        + $(this).find("td:eq(0)").text()   // Line color
+        + " line - Destination: "
+        + $(this).find("td:eq(1)").text()   // Destination
+        + " - Departs in (min): "
+        + $(this).find("td:eq(2)").text()   // Departure time
+        );
+    });
 });
 
 // refresh train data every periodically
