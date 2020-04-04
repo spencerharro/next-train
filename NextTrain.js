@@ -4,6 +4,9 @@ $( document ).ready(function() {
     createNextTrainTable();
 });
 
+// refresh train data every periodically
+setInterval(getNextTrainList, 25000);
+
 /** Populates table with next trains arriving at the specified station. */
 function getNextTrainList() {
     let stationCode = document.getElementById("station_dropdown").value;
